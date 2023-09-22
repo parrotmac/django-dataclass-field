@@ -1,0 +1,42 @@
+<div id="{{ widget.name }}" style="display: block; position:relative; min-height: 20rem; resize: both; overflow: auto"></div>
+<input type="hidden" name="{{ widget.name }}" value="">
+<script src="https://unpkg.com/@monaco-editor/loader@0.1.2/lib/umd/monaco-loader.min.js" crossorigin></script>
+<script>
+
+    // TODO: Fix this to support multiple editors on the same page
+
+    monaco_loader.config({
+        paths: {
+            vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs'
+        }
+    });
+    monaco_loader.init().then(monaco => {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            monaco.editor.setTheme('vs-dark');
+        }
+        const editor = monaco.editor.create(document.getElementById('{{ widget.name }}'), {
+            value: "{{ widget.value|default:"{}"|escapejs }}",
+            language: "json",
+            automaticLayout: true,
+            autoIndent: true,
+            formatOnPaste: true,
+            formatOnType: true
+        })
+        {% if widget.attrs.schema %}
+        monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+            validate: true,
+            schemas: [
+                {
+                    uri: "https://example.com/schema", // TODO: Could provide a mechanism to set this!
+                    fileMatch: ["*"],
+                    schema: JSON.parse('{{ widget.attrs.schema|escapejs }}'),
+                }
+            ]
+        });
+        {% endif %}
+        document.getElementsByName('{{ widget.name }}')[0].value = editor.getValue(); // set initial value
+        editor.onDidChangeModelContent((event) => {
+            document.getElementsByName('{{ widget.name }}')[0].value = editor.getValue();
+        });
+    });
+</script>

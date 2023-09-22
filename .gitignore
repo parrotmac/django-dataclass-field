@@ -1,0 +1,8 @@
+# Python stuff
+
+venv/
+*.py[cod]
+
+*.egg-info
+dist
+build/

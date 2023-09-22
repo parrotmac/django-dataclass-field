@@ -1,0 +1,35 @@
+[project]
+name = "django_dataclass_field"
+version = "0.0.1"
+authors = [
+  { name="Isaac Parker", email="isaac@linux.com" },
+]
+description = "A type-safe Django model field for dataclasses, using JSONField underneath."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry]
+name = "django_dataclass_field"
+version = "0.0.1"
+description = "A type-safe Django model field for dataclasses, using JSONField underneath."
+authors = [
+    "Isaac Parker <isaac@linux.com>"
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+dacite = "^1.8.1"
+
+[project.urls]
+"Homepage" = "https://github.com/parrotmac/django-dataclass-field"
+"Bug Tracker" = "https://github.com/parrotmac/django-dataclass-field/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
