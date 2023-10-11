@@ -12,7 +12,7 @@ from django.forms.widgets import Widget
 
 
 class JSONWidget(Widget):
-    template_name = "admin/jsonwidget.html"
+    template_name = "django_dataclass_field/admin/jsonwidget.html"
     is_hidden = False
 
     def __init__(self, attrs=None):
@@ -101,8 +101,11 @@ class DataClassField(JSONField):
         value = self.value_from_object(obj)
         return self.get_prep_value(value)
 
-    def __init__(self, data_class, *args, **kwargs):
+    def __init__(self, data_class, dacite_config: Optional[Config] = None, *args, **kwargs):
         self.data_class = data_class
+        self.dacite_config = dacite_config or Config(
+            cast=[Enum, Dict],
+        )
         super().__init__(*args, **kwargs)
 
     @property
@@ -121,7 +124,7 @@ class DataClassField(JSONField):
         if from_db is None:
             return from_db
         return from_dict(
-            data_class=self.data_class, data=from_db, config=Config(cast=[Enum, Dict])
+            data_class=self.data_class, data=from_db, config=self.dacite_config,
         )
 
     def to_python(self, value):
@@ -134,7 +137,7 @@ class DataClassField(JSONField):
         else:
             obj = value
         try:
-            return from_dict(data_class=self.data_class, data=obj)
+            return from_dict(data_class=self.data_class, data=obj, config=self.dacite_config)
         except ValidationError:
             raise ValidationError(
                 message=f"Value must be of type {self.data_class.__name__}",

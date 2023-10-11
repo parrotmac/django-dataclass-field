@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "car-example"
+version = "0.1.0"
+description = ""
+authors = ["Isaac Parker <isaac@linux.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2.6"
+django-dataclass-field = { path = "../" }
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
