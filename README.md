@@ -77,6 +77,8 @@ class CarModel(models.Model):
 
 With the above, the `car_data` field will automatically serialize instances of the `Car` dataclass into JSON when saving to the database, and will deserialize the JSON back into an instance of `Car` when reading from the database.
 
+That's it! You're ready to bring strongly typed JSON fields into your Django projects. Happy coding! 🚗💨
+
 ## Usage
 
 ### Basic Usage
@@ -124,8 +126,3 @@ We welcome contributions! Please open an issue or submit a pull request if you h
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any
 additional terms or conditions.
-
-
----
-
-That's it! You're ready to bring strongly typed JSON fields into your Django projects. Happy coding! 🚗💨
